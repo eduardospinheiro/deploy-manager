@@ -1,0 +1,15 @@
+
+{
+  "githubToken": "PUT_YOUR_TOKEN_HERE",
+  "reposBasePath": "repos",
+  "apps": [
+    {
+      "name": "SampleApp",
+      "owner": "your-org",
+      "repo": "your-repo",
+      "defaultBranch": "main",
+      "solution": "SampleApp.sln",
+      "publishPath": "publish/SampleApp"
+    }
+  ]
+}
