@@ -1,6 +1,7 @@
 
-using DeployManager.Services;
 using DeployManager.Deploy;
+using DeployManager.Exceptions;
+using DeployManager.Services;
 
 var configService = new ConfigService();
 var config = configService.Load();
@@ -29,4 +30,26 @@ var branch = Console.ReadLine();
 if (string.IsNullOrWhiteSpace(branch))
     branch = app.DefaultBranch;
 
-await orchestrator.Deploy(app, config.ReposBasePath, branch);
+try
+{
+    await orchestrator.Deploy(app, config.ReposBasePath, branch);
+
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("Deploy finalizado com sucesso.");
+}
+catch (DeployException ex)
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("Erro no deploy:");
+    Console.WriteLine(ex.Message);
+}
+catch (Exception ex)
+{
+    Console.ForegroundColor = ConsoleColor.DarkRed;
+    Console.WriteLine("Erro inesperado:");
+    Console.WriteLine(ex);
+}
+finally
+{
+    Console.ResetColor();
+}
